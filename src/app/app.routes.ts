@@ -17,12 +17,17 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () => 
-          import('./features/dashboard/dashboard').then(m => m.DashboardComponent)
+          import('./features/dashboard/dashboard/dashboard').then(m => m.DashboardComponent)
       },
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'produtos',
+        loadComponent: () => 
+          import('./features/produtos/lista-produtos/lista-produtos').then(m => m.ListaProdutosComponent)
       }
     ]
   }, 
