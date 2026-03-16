@@ -50,6 +50,15 @@ export class AuthService {
     return payload?.role ?? null;
   }
 
+
+  getEmail(): string | null {
+  const token = this.getToken();
+  if (!token) return null;
+  const payload = this.decodePayload(token);
+  return payload?.sub ?? null;
+  }
+
+  
   isAdmin(): boolean {
     return this.getRole() === 'ADMIN';
   }

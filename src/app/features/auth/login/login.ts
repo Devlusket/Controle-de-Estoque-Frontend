@@ -27,9 +27,9 @@ export class LoginComponent {
   erro = '';
 
 
-  form = this.fb.group({
+  form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    senha: ['', Validators.required, Validators.minLength(3)]
+    senha: ['', [Validators.required, Validators.pattern('.{3,}')]]
   });
 
   onSubmit(): void {
