@@ -1,24 +1,20 @@
-import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatTableModule } from '@angular/material/table';
-import { MovimentacaoService } from '../../../core/services/movimentacao.service';
-import { MovimentacaoResponse } from '../../../core/models/movimentacao.model';
+import { DatePipe } from '@angular/common';
+import { MovimentacaoService } from '../../../core/services/movimentacao.service'; 
+import { MovimentacaoResponse, TipoMovimentacao } from '../../../core/models/movimentacao.model';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatCardModule, MatTableModule, DatePipe],
+  imports: [DatePipe],
   templateUrl: './dashboard.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent implements OnInit{
-
+export class DashboardComponent implements OnInit {
   private movimentacaoService = inject(MovimentacaoService);
   private cdr = inject(ChangeDetectorRef);
 
   movimentacoes: MovimentacaoResponse[] = [];
   ultimas: MovimentacaoResponse[] = [];
-  colunas = ['tipo', 'produto', 'quantidade', 'data'];
 
   ngOnInit(): void {
     this.movimentacaoService.listar().subscribe({
@@ -31,6 +27,12 @@ export class DashboardComponent implements OnInit{
     });
   }
 
-
-
+  tipoBadgeClass(tipo: TipoMovimentacao): string {
+    const base = 'inline-flex items-center px-2 py-0.5 rounded text-xs font-medium';
+    switch (tipo) {
+      case 'ENTRADA': return `${base} bg-green-100 text-green-700`;
+      case 'SAIDA': return `${base} bg-red-100 text-red-700`;
+      case 'TRANSFERENCIA': return `${base} bg-blue-100 text-blue-700`;
+    }
+  }
 }

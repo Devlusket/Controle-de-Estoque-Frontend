@@ -1,14 +1,12 @@
-import { HttpInterceptorFn } from "@angular/common/http";
-import { inject } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { AuthService } from "../services/auth.service";
-import { catchError, throwError } from "rxjs";
-
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { ToastService } from '../services/toast.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-
-  const snackBar = inject(MatSnackBar);
   const authService = inject(AuthService);
+  const toast = inject(ToastService);
 
   return next(req).pipe(
     catchError((error) => {
@@ -17,19 +15,18 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           authService.logout();
           break;
         case 403:
-          snackBar.open('Sem permissão para esta ação.', 'Fechar', {duration: 3000})
+          toast.show('Sem permissão para esta ação.');
           break;
         case 404:
-          snackBar.open('Recurso não encontrado', 'Fechar', {duration: 3000})
+          toast.show('Recurso não encontrado.');
           break;
         case 400:
-          snackBar.open('Dados inválidos.', 'Fechar', {duration: 3000})
+          toast.show('Dados inválidos.');
           break;
         default:
-          snackBar.open('Erro interno do servidor.', 'Fechar', {duration: 3000})
+          toast.show('Erro interno do servidor.');
       }
       return throwError(() => error);
     })
-  )
-
-}
+  );
+};

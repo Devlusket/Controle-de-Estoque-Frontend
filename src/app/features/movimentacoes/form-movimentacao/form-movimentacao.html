@@ -1,50 +1,68 @@
-<div class="container">
-  <h2>Nova Movimentação</h2>
+<div class="bg-white rounded-lg border border-gray-200 p-6 max-w-lg">
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="mb-6">
+    <h2 class="text-base font-semibold text-gray-900">Nova Movimentação</h2>
+    <p class="text-sm text-gray-500 mt-0.5">Registre uma entrada, saída ou transferência</p>
+  </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Tipo</mat-label>
-      <mat-select formControlName="tipoMovimentacao">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-medium text-gray-700">Tipo</label>
+      <select formControlName="tipoMovimentacao"
+        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all bg-white text-gray-900">
         @for (tipo of tipos; track tipo) {
-          <mat-option [value]="tipo">{{ tipo }}</mat-option>
+          <option [value]="tipo">{{ tipo }}</option>
         }
-      </mat-select>
-    </mat-form-field>
+      </select>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Produto</mat-label>
-      <mat-select formControlName="produtoId">
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-medium text-gray-700">Produto</label>
+      <select formControlName="produtoId"
+        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all bg-white text-gray-900">
+        <option [value]="null" disabled>Selecione um produto</option>
         @for (produto of produtos; track produto.id) {
-          <mat-option [value]="produto.id">{{ produto.nome }}</mat-option>
+          <option [value]="produto.id">{{ produto.nome }} ({{ produto.unidadeMedida }})</option>
         }
-      </mat-select>
-    </mat-form-field>
+      </select>
+    </div>
 
     @if (mostrarCidadeDestino) {
-      <mat-form-field appearance="outline">
-        <mat-label>Cidade Destino</mat-label>
-        <mat-select formControlName="cidadeDestinoId">
+      <div class="flex flex-col gap-1.5">
+        <label class="text-sm font-medium text-gray-700">Cidade Destino</label>
+        <select formControlName="cidadeDestinoId"
+          class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all bg-white text-gray-900">
+          <option [value]="null" disabled>Selecione a cidade destino</option>
           @for (cidade of cidades; track cidade.id) {
-            <mat-option [value]="cidade.id">{{ cidade.nome }}</mat-option>
+            <option [value]="cidade.id">{{ cidade.nome }} — {{ cidade.estado }}</option>
           }
-        </mat-select>
-      </mat-form-field>
+        </select>
+      </div>
     }
 
-    <mat-form-field appearance="outline">
-      <mat-label>Quantidade</mat-label>
-      <input matInput formControlName="quantidade" type="number" />
-    </mat-form-field>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-medium text-gray-700">Quantidade</label>
+      <input formControlName="quantidade" type="number" min="1" placeholder="Ex: 100"
+        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all placeholder:text-gray-400" />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Observação</mat-label>
-      <textarea matInput formControlName="observacao"></textarea>
-    </mat-form-field>
+    <div class="flex flex-col gap-1.5">
+      <label class="text-sm font-medium text-gray-700">Observação <span class="text-gray-400 font-normal">(opcional)</span></label>
+      <textarea formControlName="observacao" rows="3" placeholder="Ex: Recebimento mensal de estoque"
+        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all placeholder:text-gray-400 resize-none"></textarea>
+    </div>
 
-    <button mat-raised-button color="primary" type="submit">
-      Registrar
-    </button>
+    <div class="flex items-center gap-3 pt-2">
+      <button type="submit"
+        class="bg-gray-900 text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+        Registrar
+      </button>
+      <button type="button" (click)="salvo.emit()"
+        class="text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-50 transition-colors">
+        Cancelar
+      </button>
+    </div>
 
   </form>
 </div>

@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { MovimentacaoService } from '../../../core/services/movimentacao.service';
 import { ProdutoService } from '../../../core/services/produto.service';
 import { CidadeService } from '../../../core/services/cidade.service';
@@ -14,7 +10,7 @@ import { CidadeResponse } from '../../../core/models/cidade.model';
 
 @Component({
   selector: 'app-form-movimentacao',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSelectModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './form-movimentacao.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -31,7 +27,6 @@ export class FormMovimentacaoComponent implements OnInit {
   produtos: ProdutoResponse[] = [];
   cidades: CidadeResponse[] = [];
   mostrarCidadeDestino = false;
-
   tipos: TipoMovimentacao[] = ['ENTRADA', 'SAIDA', 'TRANSFERENCIA'];
 
   form = this.fb.nonNullable.group({
@@ -50,11 +45,7 @@ export class FormMovimentacaoComponent implements OnInit {
 
     this.cidadeService.listar().subscribe({
       next: (dados) => {
-        if (this.authService.isAdmin()) {
-          this.cidades = dados;
-        } else {
-          this.cidades = dados.filter(c => c.sede);
-        }
+        this.cidades = this.authService.isAdmin() ? dados : dados.filter(c => c.sede);
         this.cdr.markForCheck();
       },
       error: (err) => console.error(err)
