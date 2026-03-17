@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>{{ id ? 'Editar Usuário' : 'Novo Usuário' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" />
+      @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+        <mat-error>Nome obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" />
+      @if (form.get('email')?.invalid && form.get('email')?.touched) {
+        <mat-error>Email inválido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input matInput formControlName="senha" type="password" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="ADMIN">Admin</mat-option>
+        <mat-option value="CLIENTE">Cliente</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cidade</mat-label>
+      <mat-select formControlName="cidadeId">
+        @for (cidade of cidades; track cidade.id) {
+          <mat-option [value]="cidade.id">{{ cidade.nome }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      {{ id ? 'Salvar' : 'Criar' }}
+    </button>
+
+  </form>
+</div>

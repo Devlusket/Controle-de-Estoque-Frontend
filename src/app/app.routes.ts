@@ -36,6 +36,13 @@ export const routes: Routes = [
         data: {role: 'ADMIN'},
         loadComponent: () =>
           import('./features/cidades/lista-cidades/lista-cidades').then(m => m.ListaCidadesComponent)
+      },
+      {
+        path: 'usuarios',
+        canActivate: [roleGuard],
+        data: {role: 'ADMIN'},
+        loadComponent: () =>
+          import('./features/usuarios/lista-usuarios/lista-usuarios').then(m => m.ListaUsuariosComponent)
       }
     ]
   }, 
