@@ -35,10 +35,10 @@ export class FormMovimentacaoComponent implements OnInit {
   tipos: TipoMovimentacao[] = ['ENTRADA', 'SAIDA', 'TRANSFERENCIA'];
 
   form = this.fb.nonNullable.group({
-    tipo: ['ENTRADA' as TipoMovimentacao, Validators.required],
-    produtoId: [null as number | null, Validators.required],
+    tipoMovimentacao: ['ENTRADA' as TipoMovimentacao, Validators.required],
+    produtoId: [null as number | null],
     cidadeDestinoId: [null as number | null],
-    quantidade: [null as number | null, Validators.required],
+    quantidade: [null as number | null],
     observacao: ['' as string | null]
   });
 
@@ -60,10 +60,12 @@ export class FormMovimentacaoComponent implements OnInit {
       error: (err) => console.error(err)
     });
 
-    this.form.get('tipo')?.valueChanges.subscribe(tipo => {
+    this.form.get('tipoMovimentacao')?.valueChanges.subscribe(tipo => {
       this.mostrarCidadeDestino = tipo === 'TRANSFERENCIA';
       this.cdr.markForCheck();
     });
+
+    this.cdr.markForCheck();
   }
 
   onSubmit(): void {

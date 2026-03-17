@@ -6,7 +6,7 @@ export type TipoMovimentacao = 'ENTRADA' | 'SAIDA' | 'TRANSFERENCIA';
 
 export interface MovimentacaoResponse {
   id: number;
-  tipo: TipoMovimentacao;
+  tipoMovimentacao: TipoMovimentacao;
   produto: ProdutoResponse;
   usuario: UsuarioResponse;
   cidadeOrigem: CidadeResponse | null;

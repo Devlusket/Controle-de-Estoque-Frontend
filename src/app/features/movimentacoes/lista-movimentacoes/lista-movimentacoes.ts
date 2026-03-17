@@ -22,7 +22,7 @@ export class ListaMovimentacoesComponent implements OnInit{
   authService = inject(AuthService);
 
   movimentacoes: MovimentacaoResponse[] = [];
-  colunas = ['id', 'tipo', 'produto', 'cidadeOrigem', 'cidadeDestino', 'quantidade', 'data', 'acoes'];
+  colunas = ['id', 'tipo', 'produto', 'cidadeOrigem', 'cidadeDestino', 'quantidade', 'data', 'observacao' , 'acoes'];
 
   ngOnInit(): void {
     this.carregar();

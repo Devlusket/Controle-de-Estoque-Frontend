@@ -5,7 +5,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Tipo</mat-label>
-      <mat-select formControlName="tipo">
+      <mat-select formControlName="tipoMovimentacao">
         @for (tipo of tipos; track tipo) {
           <mat-option [value]="tipo">{{ tipo }}</mat-option>
         }
