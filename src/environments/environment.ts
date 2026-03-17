@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080'
+  production: true,
+  apiUrl: 'https://controle-de-estoque-production-4472.up.railway.app'
 };

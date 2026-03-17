@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login';
 import { ShellComponent } from './layout/shell/shell';
 import { authGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   
@@ -28,6 +29,13 @@ export const routes: Routes = [
         path: 'produtos',
         loadComponent: () => 
           import('./features/produtos/lista-produtos/lista-produtos').then(m => m.ListaProdutosComponent)
+      },
+      {
+        path: 'cidades',
+        canActivate: [roleGuard],
+        data: {role: 'ADMIN'},
+        loadComponent: () =>
+          import('./features/cidades/lista-cidades/lista-cidades').then(m => m.ListaCidadesComponent)
       }
     ]
   }, 

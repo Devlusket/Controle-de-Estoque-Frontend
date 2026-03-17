@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>{{ id ? 'Editar Cidade' : 'Nova Cidade' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" />
+      @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+        <mat-error>Nome obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado (UF)</mat-label>
+      <input matInput formControlName="estado" />
+      @if (form.get('estado')?.invalid && form.get('estado')?.touched) {
+        <mat-error>Estado obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-checkbox formControlName="sede">Sede</mat-checkbox>
+
+    <button mat-raised-button color="primary" type="submit">
+      {{ id ? 'Salvar' : 'Criar' }}
+    </button>
+
+  </form>
+</div>
