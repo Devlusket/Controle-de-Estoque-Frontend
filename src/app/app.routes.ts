@@ -31,6 +31,11 @@ export const routes: Routes = [
           import('./features/produtos/lista-produtos/lista-produtos').then(m => m.ListaProdutosComponent)
       },
       {
+        path: 'movimentacoes',
+        loadComponent: () =>
+          import('./features/movimentacoes/lista-movimentacoes/lista-movimentacoes').then(m => m.ListaMovimentacoesComponent)
+      },
+      {
         path: 'cidades',
         canActivate: [roleGuard],
         data: {role: 'ADMIN'},

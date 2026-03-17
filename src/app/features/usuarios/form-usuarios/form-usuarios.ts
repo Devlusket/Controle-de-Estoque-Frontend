@@ -29,7 +29,7 @@ export class FormUsuariosComponent implements OnInit{
     email: ['', Validators.required, Validators.email],
     senha: ['', Validators.required],
     role: ['CLIENTE', Validators.required],
-    cidadeId: [null as number | null, Validators.required]
+    cidadeId: [null as number | null]
   });
 
   private cidadeService = inject(CidadeService);

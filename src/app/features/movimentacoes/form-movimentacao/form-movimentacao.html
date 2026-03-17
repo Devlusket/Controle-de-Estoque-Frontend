@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>Nova Movimentação</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        @for (tipo of tipos; track tipo) {
+          <mat-option [value]="tipo">{{ tipo }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Produto</mat-label>
+      <mat-select formControlName="produtoId">
+        @for (produto of produtos; track produto.id) {
+          <mat-option [value]="produto.id">{{ produto.nome }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (mostrarCidadeDestino) {
+      <mat-form-field appearance="outline">
+        <mat-label>Cidade Destino</mat-label>
+        <mat-select formControlName="cidadeDestinoId">
+          @for (cidade of cidades; track cidade.id) {
+            <mat-option [value]="cidade.id">{{ cidade.nome }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade</mat-label>
+      <input matInput formControlName="quantidade" type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Observação</mat-label>
+      <textarea matInput formControlName="observacao"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Registrar
+    </button>
+
+  </form>
+</div>
