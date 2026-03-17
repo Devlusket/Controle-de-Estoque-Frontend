@@ -1,41 +1,59 @@
 <div class="container">
   <h2>Produtos</h2>
 
-  <table mat-table [dataSource]="produtos">
+  @if (authService.isAdmin() && !mostrarForm) {
+    <button mat-raised-button color="primary" (click)="abrirForm()">
+      <mat-icon>add</mat-icon>
+      Novo Produto
+    </button>
+  }
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let p">{{ p.id }}</td>
-    </ng-container>
+  @if (mostrarForm) {
+    <app-form-produto
+      [id]="idSelecionado"
+      (salvo)="aoSalvar()" />
+  }
 
-    <ng-container matColumnDef="nome">
-      <th mat-header-cell *matHeaderCellDef>Nome</th>
-      <td mat-cell *matCellDef="let p">{{ p.nome }}</td>
-    </ng-container>
+  @if (!mostrarForm) {
+    <table mat-table [dataSource]="produtos">
 
-    <ng-container matColumnDef="unidadeMedida">
-      <th mat-header-cell *matHeaderCellDef>Unidade</th>
-      <td mat-cell *matCellDef="let p">{{ p.unidadeMedida }}</td>
-    </ng-container>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let p">{{ p.id }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="ativo">
-      <th mat-header-cell *matHeaderCellDef>Ativo</th>
-      <td mat-cell *matCellDef="let p">{{ p.ativo ? 'Sim' : 'Não' }}</td>
-    </ng-container>
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let p">{{ p.nome }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="acoes">
-      <th mat-header-cell *matHeaderCellDef>Ações</th>
-      <td mat-cell *matCellDef="let p">
-        @if (authService.isAdmin()) {
-          <button mat-icon-button (click)="desativar(p.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        }
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="unidadeMedida">
+        <th mat-header-cell *matHeaderCellDef>Unidade</th>
+        <td mat-cell *matCellDef="let p">{{ p.unidadeMedida }}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="colunas"></tr>
-    <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+      <ng-container matColumnDef="ativo">
+        <th mat-header-cell *matHeaderCellDef>Ativo</th>
+        <td mat-cell *matCellDef="let p">{{ p.ativo ? 'Sim' : 'Não' }}</td>
+      </ng-container>
 
-  </table>
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let p">
+          @if (authService.isAdmin()) {
+            <button mat-icon-button (click)="abrirForm(p.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="desativar(p.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+      <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+
+    </table>
+  }
 </div>

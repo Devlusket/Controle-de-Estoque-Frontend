@@ -1,0 +1,27 @@
+<div class="container">
+  <h2>{{ id ? 'Editar Produto' : 'Novo Produto' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome" />
+      @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+        <mat-error>Nome obrigatório</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Unidade de Medida</mat-label>
+      <input matInput formControlName="unidadeMedida" />
+      @if (form.get('unidadeMedida')?.invalid && form.get('unidadeMedida')?.touched) {
+        <mat-error>Unidade obrigatória</mat-error>
+      }
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      {{ id ? 'Salvar' : 'Criar' }}
+    </button>
+
+  </form>
+</div>

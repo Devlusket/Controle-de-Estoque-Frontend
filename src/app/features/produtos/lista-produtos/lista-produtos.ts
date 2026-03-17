@@ -5,10 +5,11 @@ import { MatTableModule } from '@angular/material/table';
 import { ProdutoService } from '../../../core/services/produto.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { ProdutoResponse } from '../../../core/models/produto.model';
+import { FormProdutoComponent } from '../form-produto/form-produto';
 
 @Component({
   selector: 'app-lista-produtos',
-  imports: [MatTableModule, MatButtonModule, MatIconModule],
+  imports: [MatTableModule, MatButtonModule, MatIconModule, FormProdutoComponent],
   templateUrl: './lista-produtos.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -40,6 +41,20 @@ export class ListaProdutosComponent implements OnInit {
       next: () => this.carregar,
       error: (err) => console.error(err)
     })
+  }
+
+  mostrarForm = false;
+  idSelecionado: number | null = null;
+
+  abrirForm(id: number | null = null): void {
+    this.idSelecionado = id;
+    this.mostrarForm = true;
+  };
+
+  aoSalvar(): void {
+    this.mostrarForm = false;
+    this.idSelecionado = null;
+    this.carregar();
   }
   
 
