@@ -2,9 +2,9 @@
 
 Interface web desenvolvida com Angular 21 para o sistema de controle de estoque regional. Consome a API REST do backend e oferece uma experiência completa para gerenciamento de movimentações, produtos, cidades e usuários — com controle de acesso por perfil (ADMIN / CLIENTE).
 
- **Frontend em produção:** https://controle-de-estoque-frontend-production.up.railway.app
+ **Frontend em produção:** https://controle-de-estoque-ashen.vercel.app
 
- **API em produção (Swagger):** https://controle-de-estoque-production-4472.up.railway.app/swagger-ui/index.html
+ **API em produção (Swagger):** https://controle-de-estoque-backend-7h07.onrender.com/swagger-ui/index.html
 
 ---
 
@@ -15,7 +15,8 @@ Interface web desenvolvida com Angular 21 para o sistema de controle de estoque 
 - **Tailwind CSS v3** — estilização utilitária
 - **RxJS** — requisições HTTP reativas com Observable
 - **Angular Router** — navegação e rotas protegidas
-- **Railway** — deploy em produção
+- **PWA** — Progressive Web App instalável no desktop e mobile
+- **Vercel** — deploy do frontend em produção
 
 ---
 
@@ -152,19 +153,30 @@ Acesse `http://localhost:4200`.
 3. ADMIN tem acesso completo a todas as telas
 4. CLIENTE vê apenas Dashboard, Movimentações e Produtos
 
+>  O backend está hospedado no Render no plano gratuito — a primeira requisição pode demorar ~1 minuto para o serviço acordar após inatividade.
+
 ---
 
 ##  Deploy
 
-A aplicação está hospedada no **Railway**. O deploy é automático via GitHub — qualquer push na branch `main` dispara um novo deploy.
+O frontend está hospedado na **Vercel**. O deploy é automático via GitHub — qualquer push na branch `main` dispara um novo deploy.
 
-### Configurações no Railway
+### Infraestrutura de produção
+
+| Serviço | Plataforma | Observação |
+|---|---|---|
+| Frontend (Angular) | Vercel | Plano gratuito, sempre disponível |
+| Backend (Spring Boot) | Render | Plano gratuito, dorme após 15min de inatividade |
+| Banco de dados (PostgreSQL) | Neon | Plano gratuito, sempre disponível |
+
+### Configurações na Vercel
 
 | Campo | Valor |
 |---|---|
+| Framework Preset | Angular |
 | Build Command | `pnpm run build` |
-| Start Command | `npx serve dist/estoque-b2b-frontend/browser -l 3000` |
-| Porta | `3000` |
+| Output Directory | `dist/estoque-b2b-frontend/browser` |
+| Install Command | `pnpm install` |
 
 ### Variáveis de ambiente
 
@@ -173,7 +185,7 @@ O frontend não possui variáveis de ambiente sensíveis — a URL do backend em
 ```typescript
 export const environment = {
   production: true,
-  apiUrl: 'https://controle-de-estoque-production-4472.up.railway.app'
+  apiUrl: 'https://controle-de-estoque-backend-7h07.onrender.com'
 };
 ```
 
@@ -189,6 +201,8 @@ export const environment = {
 - **Lazy Loading** — cada feature é carregada sob demanda via `loadComponent`. A aplicação inicial carrega mais rápido.
 - **JWT decodificado no frontend** — o payload do JWT é base64, decodificado com `atob()` nativo do browser. Sem bibliotecas externas para ler email e role do token.
 - **Environment por ambiente** — `environment.development.ts` para local, `environment.ts` para produção. O Angular CLI troca automaticamente no build.
+- **PWA** — Progressive Web App configurado com `ng add @angular/pwa`. O sistema pode ser instalado como app de desktop ou mobile via Chrome, abrindo em janela própria sem barra de navegador.
+- **SPA rewrite** — Vercel lida nativamente com o roteamento de SPAs, retornando `index.html` para qualquer rota e deixando o Angular Router cuidar da navegação.
 
 ---
 
